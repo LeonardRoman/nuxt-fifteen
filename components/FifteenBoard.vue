@@ -77,6 +77,7 @@
       },
       shuffleState () {
         this.state.sort(() => Math.random() - 0.5)
+        this.timer = null
       },
       inPlay (emptyIndex, tileIndex, width) {
         return (emptyIndex % width !== 0 && emptyIndex - 1 === tileIndex) ||
@@ -187,11 +188,14 @@
 
         .item {
           user-select: none;
-          cursor: pointer;
         }
 
         .hidden {
           visibility: hidden;
+        }
+
+        .chip:hover {
+          cursor: pointer;
         }
 
         .chip {
@@ -202,7 +206,6 @@
           display: flex;
           align-items: center;
           justify-content: center;
-          cursor: pointer;
           position: relative;
           filter: blur(1px);
           box-shadow: 0 15px 25px -4px rgba(0, 0, 0, 0.5), inset 0 -3px 4px -1px rgba(0, 0, 0, 0.2), 0 -10px 15px -1px rgba(235, 235, 235, 0.6), inset 0 3px 4px -1px rgba(255, 255, 255, 0.2), inset 0 0 5px 1px rgba(186, 186, 186, 0.8), inset 0 20px 30px 0 rgba(255, 255, 255, 0.2);
