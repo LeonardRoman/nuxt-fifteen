@@ -78,6 +78,7 @@
       shuffleState () {
         this.state.sort(() => Math.random() - 0.5)
         this.timer = null
+        clearInterval(this.intervalUpdateTimer)
       },
       inPlay (emptyIndex, tileIndex, width) {
         return (emptyIndex % width !== 0 && emptyIndex - 1 === tileIndex) ||
