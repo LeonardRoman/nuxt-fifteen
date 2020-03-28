@@ -28,9 +28,6 @@
 </template>
 
 <script>
-  // const FIFTEEN = Array.from({ length: 15 }, (e, i) => i + 1)
-  // FIFTEEN.push(false)
-
   export default {
     name: 'FifteenBoard',
     data () {
@@ -208,8 +205,7 @@
           cursor: pointer;
           position: relative;
           filter: blur(1px);
-          /*transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);*/
-          box-shadow: 0 15px 25px -4px rgba(0, 0, 0, 0.5), inset 0 -3px 4px -1px rgba(0, 0, 0, 0.2), 0 -10px 15px -1px rgba(255, 255, 255, 0.6), inset 0 3px 4px -1px rgba(255, 255, 255, 0.2), inset 0 0 5px 1px rgba(255, 255, 255, 0.8), inset 0 20px 30px 0 rgba(255, 255, 255, 0.2);
+          box-shadow: 0 15px 25px -4px rgba(0, 0, 0, 0.5), inset 0 -3px 4px -1px rgba(0, 0, 0, 0.2), 0 -10px 15px -1px rgba(235, 235, 235, 0.6), inset 0 3px 4px -1px rgba(255, 255, 255, 0.2), inset 0 0 5px 1px rgba(186, 186, 186, 0.8), inset 0 20px 30px 0 rgba(255, 255, 255, 0.2);
           border: none;
           border-radius: 96.32px;
           background: #ccd0d4;
@@ -233,7 +229,6 @@
       }
     }
   }
-
 
   /*Анимация*/
 
