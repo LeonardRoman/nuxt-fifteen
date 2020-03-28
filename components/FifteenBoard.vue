@@ -1,10 +1,10 @@
 <template lang="pug">
   .wrapper
     nav.menu
-      .steps Ход:
+      .steps Ход:&nbsp;
         span(v-text="steps")
-      .timer Время:
-        span(v-text="timer")
+      .timer Время:&nbsp;
+        span(v-text="getTime()")
     .board
       transition-group.grid(
         v-if="!completed"
@@ -14,11 +14,11 @@
         li(v-for="(num,i ) of state"
           :key="num"
           :class="{'item': true, 'hidden': !num }")
-          .chip-wrap
-            button.chip(
-              :style="{ disabled: completed }"
-              class="button"
-              @click="checkStep(i)"
+          button.chip(
+            :style="{ disabled: completed }"
+            class="button"
+            @click="checkStep(i)")
+            label(
               v-text="num")
       button(
         :style="{ disabled: !completed }"
@@ -87,14 +87,26 @@
           emptyIndex - width === tileIndex ||
           emptyIndex + width === tileIndex
       },
+      getTime () {
+        let time = new Date(Date.UTC(0, 0, 0, 0, 0, 0))
+        time.setSeconds(time.getSeconds() + this.timer)
+        return new Intl.DateTimeFormat('ru-RU', {
+          timeZone: 'Greenwich',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit'
+        }).format(new Date(time))
+      },
       checkStep (i) {
         if (i !== this.empty() && this.inPlay(this.empty(), i, 4)) {
           this.nextStep(i)
           ++this.steps
-          if (!this.timer) this.timer = 0
-          this.intervalUpdateTimer = setInterval(() => {
-            this.timer++
-          }, 1000)
+          if (!this.timer) {
+            this.timer = 0
+            this.intervalUpdateTimer = setInterval(() => {
+              this.timer++
+            }, 1000)
+          }
         }
       }
     },
@@ -106,24 +118,13 @@
 
 <style scoped
        lang="scss">
-  /* Головные стили*/
-  \:root {
-    box-sizing: border-box
-  }
-
-  *, *:before, *:after {
-    box-sizing: inherit;
-    margin: 0;
-    padding: 0;
-  }
-
-  button::-moz-focus-inner {
-    border: none;
-  }
+  @import url(https://fonts.googleapis.com/css?family=Lato:700);
 
   /* Стили доски*/
 
   .wrapper {
+    border-radius: 1rem;
+    font-family: 'Lato', sans-serif;
     padding: .5rem;
 
     .overlay {
@@ -135,11 +136,10 @@
       background: rgba(255, 255, 255, 0.9);
       border-radius: 8px;
       border: 1px solid black;
-      /*linear-gradient(90deg, rgba(3, 1, 22, 1) 0%, rgba(130, 130, 135, 1) 50%, rgba(3, 1, 22, 1) 100%);*/
       font-size: 18px;
       font-family: inherit;
       cursor: pointer;
-      transition: opacity 0.2s ease, visibility 0s linear;
+
     }
 
     .overlay-hidden {
@@ -155,6 +155,10 @@
       padding: .8rem;
       font-size: 1.5rem;
       width: 100%;
+      transition: color 300ms ease-out;
+      text-shadow: 1px 1px 3px #ccd0d4, 0 0 0 rgba(0, 0, 0, 0.8), 1px 1px 4px #fff;
+      color: rgba(0, 0, 0, 0.4);
+      margin-bottom: 1rem;
 
       .timer, .step {
         width: 30%;
@@ -174,7 +178,6 @@
       max-height: 500px;
       border-radius: .5rem;
       list-style: none;
-      overflow: hidden;
 
       .grid {
         display: grid;
@@ -183,46 +186,54 @@
         height: 100%;
         width: 100%;
         list-style: none;
+        padding: .5rem;
 
         .item {
           user-select: none;
           cursor: pointer;
-          z-index: 10;
         }
 
         .hidden {
           visibility: hidden;
         }
 
-        .chip-wrap {
-          height: 100px;
-          width: 100px;
-          padding: 4px;
-          border-radius: 50%;
-          background: linear-gradient(90deg, rgba(3, 1, 22, 1) 0%, rgba(130, 130, 135, 1) 50%, rgba(3, 1, 22, 1) 100%);
+        .chip {
+          $size: 120px;
+          $radius: $size * 0.688;
+          height: $radius;
+          width: $radius;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          position: relative;
+          filter: blur(1px);
+          /*transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);*/
+          box-shadow: 0 15px 25px -4px rgba(0, 0, 0, 0.5), inset 0 -3px 4px -1px rgba(0, 0, 0, 0.2), 0 -10px 15px -1px rgba(255, 255, 255, 0.6), inset 0 3px 4px -1px rgba(255, 255, 255, 0.2), inset 0 0 5px 1px rgba(255, 255, 255, 0.8), inset 0 20px 30px 0 rgba(255, 255, 255, 0.2);
+          border: none;
+          border-radius: 96.32px;
+          background: #ccd0d4;
+          outline: none;
 
-          .chip {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+          label {
+            transition: color 300ms ease-out;
+            text-shadow: 1px 1px 3px #ccd0d4, 0 0 0 rgba(0, 0, 0, 0.8), 1px 1px 4px #fff;
+            text-align: center;
+            position: absolute;
+            font-weight: 700;
+            font-size: 1.5rem;
+            display: block;
+            opacity: 0.9;
             height: 100%;
             width: 100%;
-            border-radius: 50%;
-            border: 4px solid #2b2b2b;
-            font-size: 24px;
-            font-family: inherit;
-            background: black;
-            cursor: pointer;
-            position: relative;
-            color: white;
-            font-weight: bold;
-            overflow: hidden;
-            outline: none;
+            color: rgba(0, 0, 0, 0.4);
+            line-height: $size / 1.5
           }
         }
       }
     }
   }
+
 
   /*Анимация*/
 
