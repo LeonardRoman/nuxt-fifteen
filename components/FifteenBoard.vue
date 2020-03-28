@@ -130,12 +130,12 @@
       left: 0;
       height: 100%;
       width: 100%;
-      background: rgba(255, 255, 255, 0.9);
-      border-radius: 8px;
-      border: 1px solid black;
       font-size: 18px;
       font-family: inherit;
       cursor: pointer;
+      outline: none;
+      background: #ccd0d4;
+      border: none;
 
     }
 
