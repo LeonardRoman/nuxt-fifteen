@@ -99,7 +99,7 @@
           this.nextStep(i)
           ++this.steps
           if (!this.timer) {
-            this.timer = 0
+            this.timer = 1
             this.intervalUpdateTimer = setInterval(() => {
               this.timer++
             }, 1000)
